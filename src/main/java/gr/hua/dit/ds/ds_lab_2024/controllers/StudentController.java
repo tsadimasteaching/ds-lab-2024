@@ -19,23 +19,31 @@ public class StudentController {
     public void setup() {
         Student Stud1= new Student(1, "Nick", "Jones", "nick@hua.gr");
         Student Stud2= new Student(2, "Jack", "James", "jack@hua.gr");
-        Student Stud3= new Student(2,"John", "Stone", "john@hua.gr");
+        Student Stud3= new Student(3,"John", "Stone", "john@hua.gr");
         students.add(Stud1);
         students.add(Stud2);
         students.add(Stud3);
     }
+
+
+    public Student getStudent(List<Student> stdlist, int id) {
+        for (Student student : stdlist) {
+            if (student.getId() == id) {
+                return student;
+            }
+        }
+        return null;
+    }
+
     @GetMapping("")
     public String showStudents(Model model){
-
-
         model.addAttribute("students", students);
-
         return "students";
     }
 
     @GetMapping("/{id}")
     public String showStudent(@PathVariable Integer id, Model model){
-        Student student = students.get(id);
+        Student student = getStudent(students, id);
         model.addAttribute("students", student);
         return "students";
     }
