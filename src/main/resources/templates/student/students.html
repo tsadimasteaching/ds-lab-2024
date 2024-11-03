@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Students</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+  <div th:if="${ not#lists.isEmpty(students)}">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="student : ${students}">
+        <td th:text="${student.firstName}"></td>
+        <td th:text="${student.lastName}"></td>
+        <td th:text="${student.email}"></td>
+        <td> <a th:href="@{'/student/' + ${student.id}}">Details</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:if="${ #lists.isEmpty(students)}">
+    No Students found!
+  </div>
+  <a href="/student/new" class="btn btn-primary" role="button">Create new Student</a>
+</div>
+</body>
+</html>

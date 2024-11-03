@@ -38,22 +38,21 @@ public class StudentController {
     @GetMapping("")
     public String showStudents(Model model){
         model.addAttribute("students", students);
-        return "students";
+        return "student/students";
     }
 
     @GetMapping("/{id}")
     public String showStudent(@PathVariable Integer id, Model model){
         Student student = getStudent(students, id);
         model.addAttribute("students", student);
-        return "students";
+        return "student/students";
     }
 
     @GetMapping("/new")
     public String addStudent(Model model){
         Student student = new Student();
         model.addAttribute("student", student);
-
-        return "add_student";
+        return "student/student";
 
     }
 
