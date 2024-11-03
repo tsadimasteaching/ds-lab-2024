@@ -62,6 +62,6 @@ public class StudentController {
         System.out.println(students);
         students.add(student);
         model.addAttribute("students", students);
-        return "students";
+        return "student/students";
     }
 }
