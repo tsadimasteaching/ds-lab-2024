@@ -1,22 +1,16 @@
 package gr.hua.dit.ds.ds_lab_2024.entities;
 
 
-import jakarta.persistence.*;
 
-@Entity
 public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+
     private Integer Id;
 
-    @Column
+
     private String firstName;
 
-    @Column
     private String lastName;
 
-    @Column
     private String email;
 
     public Student(String firstName, String lastName, String email) {
