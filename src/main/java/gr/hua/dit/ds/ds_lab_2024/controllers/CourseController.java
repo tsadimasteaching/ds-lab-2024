@@ -2,11 +2,13 @@ package gr.hua.dit.ds.ds_lab_2024.controllers;
 
 
 import gr.hua.dit.ds.ds_lab_2024.entities.Course;
+import gr.hua.dit.ds.ds_lab_2024.entities.Semester;
 import gr.hua.dit.ds.ds_lab_2024.entities.Student;
 import gr.hua.dit.ds.ds_lab_2024.entities.Teacher;
 import gr.hua.dit.ds.ds_lab_2024.repositories.CourseRepository;
 import gr.hua.dit.ds.ds_lab_2024.service.CourseService;
 import gr.hua.dit.ds.ds_lab_2024.service.TeacherService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,17 @@ public class CourseController {
 
     @Autowired
     private TeacherService teacherService;
+
+
+//    @PostConstruct
+//    public void setup() {
+//        Course c1= new Course("Operating Systems", Semester.C);
+//        Course c2= new Course("Data Structures", Semester.A);
+//        Course c3= new Course("Algorithms", Semester.B);
+//        courseService.saveCourse(c1);
+//        courseService.saveCourse(c2);
+//        courseService.saveCourse(c3);
+//    }
 
     @RequestMapping()
     public String showCourses(Model model) {
@@ -69,8 +82,9 @@ public class CourseController {
     }
 
     @PostMapping("/assign/{id}")
-    public String assignTeacherToCourse(@PathVariable int id, @ModelAttribute("teacher") Teacher teacher, Model model) {
-        System.out.println(teacher);
+    public String assignTeacherToCourse(@PathVariable int id, @RequestParam(value = "teacher", required = true) int teacherId, Model model) {
+        System.out.println(teacherId);
+        Teacher teacher = teacherService.getTeacher(teacherId);
         Course course = courseService.getCourse(id);
         System.out.println(course);
         courseService.assignTeacherToCourse(id, teacher);

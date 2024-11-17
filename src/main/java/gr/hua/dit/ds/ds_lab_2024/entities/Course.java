@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column
@@ -51,6 +51,14 @@ public class Course {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public Course(String title, Semester semester) {
+        this.title = title;
+        this.semester = semester;
+    }
+
+    public Course() {
     }
 
     @Override

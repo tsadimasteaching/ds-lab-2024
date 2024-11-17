@@ -28,4 +28,9 @@ public class TeacherService {
         return teacherRepository.findById(teacherId).get();
     }
 
+    @Transactional
+    public void saveTeacher(Teacher teacher) {
+        teacherRepository.save(teacher);
+    }
+
 }

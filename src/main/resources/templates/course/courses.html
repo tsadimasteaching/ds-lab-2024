@@ -16,6 +16,7 @@
             <tr>
                 <th>Title</th>
                 <th>Semester</th>
+                <th>Teacher</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -23,6 +24,7 @@
             <tr th:each="course : ${courses}">
                 <td th:text="${course.title}"></td>
                 <td th:text="${course.semester}"></td>
+                <td th:text="${course.teacher}"></td>
                 <td>
                     <a th:href="@{'/course/' + ${course.id}}">Details</a>
                 <span th:if="${course.teacher==null}">

@@ -37,7 +37,10 @@ public class CourseService {
     @Transactional
     public void assignTeacherToCourse(int courseId, Teacher teacher) {
         Course course = courseRepository.findById(courseId).get();
+        System.out.println(course);
+        System.out.println(course.getTeacher());
         course.setTeacher(teacher);
+        System.out.println(course.getTeacher());
         courseRepository.save(course);
     }
 
