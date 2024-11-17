@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${course.title}"></title>
+</head>
+<body>
+
+<div layout:fragment="main-content">
+    <p th:text="'assign Teacher to  '+ ${course.title}"></p>
+    <form action="#" th:action="@{/course/assign/{cid}(cid=${course.getId()})}" th:object="${course}"
+          method="post">
+        <select name="teacher">
+        <option th:each="teacher : ${teachers}"
+                th:value="${teacher.getId()}"
+                th:text="${teacher.getFirstName() + ' ' +teacher.getLastName()}"></option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+</div>
+</html>

@@ -19,6 +19,14 @@ public class Student {
     @Column
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_profile_id", referencedColumnName = "id")
+    private StudentProfile studentProfile;
+
+    public StudentProfile getStudentProfile() {
+        return studentProfile;
+    }
+
     public Student(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
