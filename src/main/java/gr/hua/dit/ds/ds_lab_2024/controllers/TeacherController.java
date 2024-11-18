@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("teacher")
 public class TeacherController {
 
-    @Autowired
+
     private TeacherService teacherService;
 
-//    @PostConstruct
+    public TeacherController(TeacherService teacherService) {
+        this.teacherService = teacherService;
+    }
+
+    //    @PostConstruct
 //    public void setup() {
 //       Teacher t1 = new Teacher("Prof","Mark","Tailor","mark@company.com");
 //       Teacher t2 = new Teacher("Lec","John","Marmor","john@example.com");

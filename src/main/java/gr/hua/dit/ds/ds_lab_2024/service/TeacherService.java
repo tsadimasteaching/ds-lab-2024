@@ -12,11 +12,14 @@ import java.util.List;
 @Service
 public class TeacherService {
 
-    @Autowired
     private TeacherRepository teacherRepository;
 
-    @Autowired
     private CourseRepository courseRepository;
+
+    public TeacherService(TeacherRepository teacherRepository, CourseRepository courseRepository) {
+        this.teacherRepository = teacherRepository;
+        this.courseRepository = courseRepository;
+    }
 
     @Transactional
     public List<Teacher> getTeachers(){

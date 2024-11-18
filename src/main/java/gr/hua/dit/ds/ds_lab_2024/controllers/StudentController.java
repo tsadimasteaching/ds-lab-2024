@@ -16,10 +16,14 @@ import java.util.List;
 @RequestMapping("student")
 public class StudentController {
 
-    @Autowired
+
    StudentService studentService;
 
-//    @PostConstruct
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    //    @PostConstruct
 //    public void setup() {
 //        Student Stud1= new Student("Nick", "Jones", "nick@hua.gr");
 //        Student Stud2= new Student("Jack", "James", "jack@hua.gr");

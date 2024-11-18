@@ -20,14 +20,19 @@ import java.util.List;
 @RequestMapping("course")
 public class CourseController {
 
-    @Autowired
+
     private CourseService courseService;
 
-    @Autowired
+
     private TeacherService teacherService;
 
+    public CourseController(CourseService courseService, TeacherService teacherService) {
+        this.courseService = courseService;
+        this.teacherService = teacherService;
+    }
 
-//    @PostConstruct
+
+    //    @PostConstruct
 //    public void setup() {
 //        Course c1= new Course("Operating Systems", Semester.C);
 //        Course c2= new Course("Data Structures", Semester.A);
