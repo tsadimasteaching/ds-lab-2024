@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{page_layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<body>
+<div layout:fragment="main-content">
+    <div th:if="${ student}">
+
+        <div class="card" style="width:400px">
+            <img class="card-img-top" th:src="@{/images/img_avatar1.png}" alt="Card image">
+            <div class="card-body">
+                <h4 class="card-title" th:text="${student.firstName + ' ' + student.lastName}"></h4>
+                <p class="card-text" th:text="'Student ID is ' + ${student.id}"></p>
+                <div class="card-text" th:if="${student.studentProfile}">
+                <p th:if="${student.studentProfile.city}" th:text="'Student City is ' + ${student.studentProfile.city}"></p>
+                <p th:if="${student.studentProfile.street}" th:text="'Student Street is ' + ${student.studentProfile.street}"></p>
+                <p th:if="${student.studentProfile.streetNumber}" th:text="'Student Number is ' + ${student.studentProfile.streetNumber}"></p>
+                </div>
+                <a href="#" class="btn btn-primary">See Profile</a>
+            </div>
+        </div>
+
+    </div>
+    <div th:if="${student == null}">
+        No Students found!
+    </div>
+</div>
+</body>
+</html>

@@ -2,6 +2,8 @@ package gr.hua.dit.ds.ds_lab_2024.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table
 public class Course {
@@ -20,6 +22,17 @@ public class Course {
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="teacher_id")
     private Teacher teacher;
+
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name="course_student",
+            joinColumns = @JoinColumn(name="course_id"),
+            inverseJoinColumns = @JoinColumn(name="student_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "student_id"})
+    )
+    private List<Student> students;
 
     public int getId() {
         return id;
@@ -51,6 +64,18 @@ public class Course {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
     }
 
     public Course(String title, Semester semester) {

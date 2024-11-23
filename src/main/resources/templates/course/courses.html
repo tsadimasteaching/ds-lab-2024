@@ -32,7 +32,10 @@
                 </span>
                 <span th:if="${course.teacher!=null}">
                     Teacher: <span th:text="${course.teacher.getFirstName() + ' ' + course.teacher.getLastName()}"></span>
-                    <a th:href="@{'/course/unassign/' + ${course.id}}">Unassign</a>
+                    <a class="btn btn-outline-danger btn-sm"  th:href="@{'/course/unassign/' + ${course.id}}">Unassign</a>
+                </span>
+                <span>
+                     <a class="btn btn-outline-light btn-sm" th:href="@{'/course/studentassign/' + ${course.id}}">Assign Student</a>
                 </span>
                 </td>
             </tr>

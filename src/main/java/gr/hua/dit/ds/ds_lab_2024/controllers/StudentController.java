@@ -46,6 +46,12 @@ public class StudentController {
         return "student/students";
     }
 
+    @GetMapping("/profile/{id}")
+    public String showProfile(@PathVariable Integer id, Model model){
+        model.addAttribute("student", studentService.getStudent(id));
+        return "student/student-profile";
+    }
+
     @GetMapping("/new")
     public String addStudent(Model model){
         Student student = new Student();

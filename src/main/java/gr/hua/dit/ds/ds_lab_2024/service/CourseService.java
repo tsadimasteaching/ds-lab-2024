@@ -1,6 +1,7 @@
 package gr.hua.dit.ds.ds_lab_2024.service;
 
 import gr.hua.dit.ds.ds_lab_2024.entities.Course;
+import gr.hua.dit.ds.ds_lab_2024.entities.Student;
 import gr.hua.dit.ds.ds_lab_2024.entities.Teacher;
 import gr.hua.dit.ds.ds_lab_2024.repositories.CourseRepository;
 import gr.hua.dit.ds.ds_lab_2024.repositories.TeacherRepository;
@@ -54,4 +55,12 @@ public class CourseService {
         courseRepository.save(course);
     }
 
+    @Transactional
+    public void assignStudentToCourse(int courseId, Student student) {
+        Course course = courseRepository.findById(courseId).get();
+        course.addStudent(student);
+        System.out.println("Course students: ");
+        System.out.println(course.getStudents());
+        courseRepository.save(course);
+    }
 }

@@ -3,6 +3,8 @@ package gr.hua.dit.ds.ds_lab_2024.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Student {
     @Id
@@ -22,6 +24,16 @@ public class Student {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_profile_id", referencedColumnName = "id")
     private StudentProfile studentProfile;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name="course_student",
+            joinColumns = @JoinColumn(name="student_id"),
+            inverseJoinColumns = @JoinColumn(name="course_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "course_id"})
+    )
+    private List<Course> courses;
 
     public StudentProfile getStudentProfile() {
         return studentProfile;

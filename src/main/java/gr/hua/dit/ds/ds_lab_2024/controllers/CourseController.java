@@ -7,6 +7,7 @@ import gr.hua.dit.ds.ds_lab_2024.entities.Student;
 import gr.hua.dit.ds.ds_lab_2024.entities.Teacher;
 import gr.hua.dit.ds.ds_lab_2024.repositories.CourseRepository;
 import gr.hua.dit.ds.ds_lab_2024.service.CourseService;
+import gr.hua.dit.ds.ds_lab_2024.service.StudentService;
 import gr.hua.dit.ds.ds_lab_2024.service.TeacherService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,16 @@ import java.util.List;
 public class CourseController {
 
 
+    private final StudentService studentService;
     private CourseService courseService;
 
 
     private TeacherService teacherService;
 
-    public CourseController(CourseService courseService, TeacherService teacherService) {
+    public CourseController(CourseService courseService, TeacherService teacherService, StudentService studentService) {
         this.courseService = courseService;
         this.teacherService = teacherService;
+        this.studentService = studentService;
     }
 
 
@@ -86,6 +89,18 @@ public class CourseController {
         return "course/courses";
     }
 
+    @GetMapping("/studentassign/{id}")
+    public String showAssignStudentToCourse(@PathVariable int id, Model model) {
+        Course course = courseService.getCourse(id);
+        List<Student> students = studentService.getStudents();
+        List<Student> existing_students = course.getStudents();
+        students.removeAll(existing_students);
+        model.addAttribute("course", course);
+        model.addAttribute("students", students);
+        return "course/assignstudent";
+    }
+
+
     @PostMapping("/assign/{id}")
     public String assignTeacherToCourse(@PathVariable int id, @RequestParam(value = "teacher", required = true) int teacherId, Model model) {
         System.out.println(teacherId);
@@ -93,6 +108,18 @@ public class CourseController {
         Course course = courseService.getCourse(id);
         System.out.println(course);
         courseService.assignTeacherToCourse(id, teacher);
+        model.addAttribute("courses", courseService.getCourses());
+        return "course/courses";
+    }
+
+
+    @PostMapping("/studentassign/{id}")
+    public String assignStudentToCourse(@PathVariable int id, @RequestParam(value = "student", required = true) int studentId, Model model) {
+        System.out.println(studentId);
+        Student student = studentService.getStudent(studentId);
+        Course course = courseService.getCourse(id);
+        System.out.println(course);
+        courseService.assignStudentToCourse(id, student);
         model.addAttribute("courses", courseService.getCourses());
         return "course/courses";
     }
