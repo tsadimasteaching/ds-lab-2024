@@ -25,7 +25,7 @@
         <td th:text="${student.firstName}"></td>
         <td th:text="${student.lastName}"></td>
         <td th:text="${student.email}"></td>
-        <td> <a th:href="@{'/student/' + ${student.id}}">Details</a></td>
+        <td> <a  class="btn btn-outline-light btn-sm" th:href="@{'/student/' + ${student.id}}">Details</a></td>
       </tr>
       </tbody>
     </table>

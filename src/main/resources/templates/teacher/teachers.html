@@ -27,7 +27,10 @@
         <td th:text="${teacher.firstName}"></td>
         <td th:text="${teacher.lastName}"></td>
         <td th:text="${teacher.email}"></td>
-        <td> <a th:href="@{'/teacher/' + ${teacher.id}}">Details</a></td>
+        <td>
+          <a class="btn btn-outline-light btn-sm"  th:href="@{'/teacher/' + ${teacher.id}}">Details</a>
+          <a class="btn btn-outline-info btn-sm"  th:href="@{'/teacher/' + ${teacher.id} + '/courses'}">Courses</a>
+        </td>
       </tr>
       </tbody>
     </table>

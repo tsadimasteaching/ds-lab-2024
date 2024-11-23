@@ -58,6 +58,11 @@ public class TeacherController {
         return "teacher/teachers";
     }
 
-
+    @GetMapping("/{id}/courses")
+    public String showCourses(@PathVariable("id") Integer id, Model model){
+        Teacher teacher = teacherService.getTeacher(id);
+        model.addAttribute("courses", teacher.getCourses());
+        return "course/courses";
+    }
 
 }
