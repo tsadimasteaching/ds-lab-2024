@@ -52,5 +52,21 @@
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 <script src="../../static/js/popper.min.js" th:src="@{/js/popper.min.js}" ></script>
 <script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+    // Get the current path from the browser's URL
+    const currentPath = window.location.pathname;
+
+    // Select all nav links
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    // Loop through each link and check if it matches the current path
+    navLinks.forEach(link => {
+        if (link.getAttribute('data-path') === currentPath) {
+            link.classList.add('active'); // Add the 'active' class
+        } else {
+            link.classList.remove('active'); // Remove the 'active' class (optional)
+        }
+    });
+</script>
 </body>
 </html>
