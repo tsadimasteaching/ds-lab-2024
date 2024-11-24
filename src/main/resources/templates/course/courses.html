@@ -18,26 +18,27 @@
                 <th>Semester</th>
                 <th>Teacher</th>
                 <th>Actions</th>
+                <th>#Students</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="course : ${courses}">
                 <td th:text="${course.title}"></td>
                 <td th:text="${course.semester}"></td>
-                <td th:text="${course.teacher}"></td>
+                <td> <a th:if="${course.teacher!=null}" th:href="@{'/teacher/' + ${course.teacher.getId()}}" th:text="${course.teacher.getFirstName() + ' ' + course.teacher.getLastName()}"></a></td>
                 <td>
-                    <a th:href="@{'/course/' + ${course.id}}">Details</a>
+                    <a class="btn btn-outline-primary btn-sm" th:href="@{'/course/' + ${course.id}}">Details</a>
                 <span th:if="${course.teacher==null}">
                     <a th:href="@{'/course/assign/' + ${course.id}}">Assign Teacher</a>
                 </span>
                 <span th:if="${course.teacher!=null}">
-                    Teacher: <span th:text="${course.teacher.getFirstName() + ' ' + course.teacher.getLastName()}"></span>
                     <a class="btn btn-outline-danger btn-sm"  th:href="@{'/course/unassign/' + ${course.id}}">Unassign</a>
                 </span>
                 <span>
                      <a class="btn btn-outline-light btn-sm" th:href="@{'/course/studentassign/' + ${course.id}}">Assign Student</a>
                 </span>
                 </td>
+                <td> <span th:if="${course.students!=null}" th:text="${course.students.size()}"></span></td>
             </tr>
             </tbody>
         </table>

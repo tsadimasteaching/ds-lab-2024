@@ -12,6 +12,7 @@
 
 <div layout:fragment="main-content">
     <p th:text="'assign Student to  '+ ${course.title}"></p>
+
     <form action="#" th:action="@{/course/studentassign/{cid}(cid=${course.getId()})}" th:object="${course}"
           method="post">
         <select name="student">

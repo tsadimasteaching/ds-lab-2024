@@ -70,6 +70,7 @@ public class CourseController {
     public String saveStudent(@ModelAttribute("course") Course course, Model model) {
         courseService.saveCourse(course);
         model.addAttribute("courses", courseService.getCourses());
+        model.addAttribute("successMessage", "Course added successfully!");
         return "course/courses";
     }
 
@@ -109,6 +110,7 @@ public class CourseController {
         System.out.println(course);
         courseService.assignTeacherToCourse(id, teacher);
         model.addAttribute("courses", courseService.getCourses());
+        model.addAttribute("successMessage", "Form submitted successfully!");
         return "course/courses";
     }
 
