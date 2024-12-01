@@ -46,7 +46,7 @@
     <div th:if="${ #lists.isEmpty(courses)}">
         No Courses found!
     </div>
-    <a href="/course/new" class="btn btn-primary" role="button">Create new Course</a>
+    <a sec:authorize="hasRole('ADMIN')" href="/course/new" class="btn btn-primary" role="button">Create new Course</a>
 </div>
 </body>
 </html>
