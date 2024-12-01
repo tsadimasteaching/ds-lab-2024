@@ -1,6 +1,9 @@
 package gr.hua.dit.ds.ds_lab_2024.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -13,6 +16,8 @@ public class Course {
     private int id;
 
     @Column
+    @NotEmpty(message = "Title is required")
+    @Size(min = 3, max = 50)
     private String title;
 
     @Enumerated

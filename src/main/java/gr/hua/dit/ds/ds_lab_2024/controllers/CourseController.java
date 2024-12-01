@@ -10,10 +10,12 @@ import gr.hua.dit.ds.ds_lab_2024.service.CourseService;
 import gr.hua.dit.ds.ds_lab_2024.service.StudentService;
 import gr.hua.dit.ds.ds_lab_2024.service.TeacherService;
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,11 +72,17 @@ public class CourseController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/new")
-    public String saveStudent(@ModelAttribute("course") Course course, Model model) {
-        courseService.saveCourse(course);
-        model.addAttribute("courses", courseService.getCourses());
-        model.addAttribute("successMessage", "Course added successfully!");
-        return "course/courses";
+    public String saveStudent(@Valid @ModelAttribute("course") Course course,BindingResult theBindingResult, Model model) {
+        if (theBindingResult.hasErrors()) {
+            System.out.println("error");
+            return "course/course";
+        } else {
+            courseService.saveCourse(course);
+            model.addAttribute("courses", courseService.getCourses());
+            model.addAttribute("successMessage", "Course added successfully!");
+            return "course/courses";
+        }
+
     }
 
     @GetMapping("/assign/{id}")
