@@ -17,14 +17,16 @@
             <a class="nav-link" href="/student" data-path="/student">Students</a>
             <a class="nav-link" href="/teacher" data-path="/teacher" >Teachers</a>
             <a class="nav-link" href="/course" data-path="/course">Courses</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/users">Users</a>
+            </a>
+            <a sec:authorize="!isAuthenticated()"  class="nav-link">
+                <a  class="nav-link" href="/login">Login</a>
+                <a  class="nav-link" href="/register">Register</a>
+            </a>
             <a sec:authorize="isAuthenticated()"  class="nav-link">
                 <form th:action="@{/logout}" method="post">
                     <input type="submit"  class="btn btn-primary" value="Sign Out"/>
                 </form>
-            </a>
-            <a sec:authorize="!isAuthenticated()"  class="nav-link">
-                <a  class="btn btn-primary" href="/login">Login</a>
-                <a  class="btn btn-link" href="/register">Register</a>
             </a>
         </nav>
     </div>

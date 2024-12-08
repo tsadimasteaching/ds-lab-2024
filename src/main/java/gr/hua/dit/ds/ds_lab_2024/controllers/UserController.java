@@ -43,13 +43,13 @@ public class UserController {
     public String showUsers(Model model){
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
-        return "users";
+        return "auth/users";
     }
 
     @GetMapping("/user/{user_id}")
     public String showUser(@PathVariable Long user_id, Model model){
         model.addAttribute("user", userService.getUser(user_id));
-        return "edit_user";
+        return "auth/user";
     }
 
     @PostMapping("/user/{user_id}")
@@ -59,7 +59,7 @@ public class UserController {
         the_user.setUsername(user.getUsername());
         userService.saveUser(the_user);
         model.addAttribute("users", userService.getUsers());
-        return "users";
+        return "auth/users";
     }
 
     @GetMapping("/user/role/delete/{user_id}/{role_id}")
@@ -71,7 +71,7 @@ public class UserController {
         userService.updateUer(user);
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
-        return "users";
+        return "auth/users";
 
     }
 
@@ -84,7 +84,7 @@ public class UserController {
         userService.updateUer(user);
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
-        return "users";
+        return "auth/users";
 
     }
 
