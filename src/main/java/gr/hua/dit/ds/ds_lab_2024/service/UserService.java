@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public Integer updateUer(User user) {
+    public Integer updateUser(User user) {
         user = userRepository.save(user);
         return user.getId();
     }

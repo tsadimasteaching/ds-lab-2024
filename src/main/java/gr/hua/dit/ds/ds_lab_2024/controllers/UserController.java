@@ -36,7 +36,7 @@ public class UserController {
         Integer id = userService.saveUser(user);
         String message = "User '"+id+"' saved successfully !";
         model.addAttribute("msg", message);
-        return "home";
+        return "index";
     }
 
     @GetMapping("/users")
@@ -57,7 +57,7 @@ public class UserController {
         User the_user = (User) userService.getUser(user_id);
         the_user.setEmail(user.getEmail());
         the_user.setUsername(user.getUsername());
-        userService.saveUser(the_user);
+        userService.updateUser(the_user);
         model.addAttribute("users", userService.getUsers());
         return "auth/users";
     }
@@ -68,7 +68,7 @@ public class UserController {
         Role role = roleRepository.findById(role_id).get();
         user.getRoles().remove(role);
         System.out.println("Roles: "+user.getRoles());
-        userService.updateUer(user);
+        userService.updateUser(user);
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
         return "auth/users";
@@ -81,7 +81,7 @@ public class UserController {
         Role role = roleRepository.findById(role_id).get();
         user.getRoles().add(role);
         System.out.println("Roles: "+user.getRoles());
-        userService.updateUer(user);
+        userService.updateUser(user);
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("roles", roleRepository.findAll());
         return "auth/users";
