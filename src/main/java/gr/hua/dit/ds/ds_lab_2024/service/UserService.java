@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.util.HashSet;
@@ -38,8 +37,8 @@ public class UserService implements UserDetailsService {
     @Transactional
     public Integer saveUser(User user) {
         String passwd= user.getPassword();
-        String encodedPasswod = passwordEncoder.encode(passwd);
-        user.setPassword(encodedPasswod);
+        String encodedPassword = passwordEncoder.encode(passwd);
+        user.setPassword(encodedPassword);
 
         Role role = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -85,6 +84,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(userId).get();
     }
 
+    @Transactional
     public void updateOrInsertRole(Role role) {
         roleRepository.updateOrInsert(role);
     }
