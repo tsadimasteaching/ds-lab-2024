@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseService {
@@ -62,5 +63,18 @@ public class CourseService {
         System.out.println("Course students: ");
         System.out.println(course.getStudents());
         courseRepository.save(course);
+    }
+
+    public boolean deleteCourse(Integer courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+
+        if (course.isPresent()) {
+            courseRepository.deleteById(courseId);
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 }
