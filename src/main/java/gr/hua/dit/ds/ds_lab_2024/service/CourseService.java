@@ -29,8 +29,8 @@ public class CourseService {
     }
 
     @Transactional
-    public void saveCourse(Course course) {
-        courseRepository.save(course);
+    public Course saveCourse(Course course) {
+       return courseRepository.save(course);
     }
 
     @Transactional
