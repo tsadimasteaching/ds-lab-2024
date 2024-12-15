@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Optional<User> opt = userRepository.findByUsername(username);
 
         if(opt.isEmpty())
-            throw new UsernameNotFoundException("User with email: " +username +" not found !");
+            throw new UsernameNotFoundException("User with username: " +username +" not found !");
         else {
             User user = opt.get();
 
