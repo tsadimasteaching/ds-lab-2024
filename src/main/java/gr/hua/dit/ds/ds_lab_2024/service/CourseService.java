@@ -35,8 +35,8 @@ public class CourseService {
     }
 
     @Transactional
-    public Course getCourse(Integer courseId) {
-        return courseRepository.findById(courseId).get();
+    public Optional<Course> getCourse(Integer courseId) {
+        return courseRepository.findById(courseId);
     }
 
     @Transactional
