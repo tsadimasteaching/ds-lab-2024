@@ -5,9 +5,11 @@ import gr.hua.dit.ds.ds_lab_2024.repositories.StudentRepository;
 import gr.hua.dit.ds.ds_lab_2024.service.StudentService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +43,13 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public String showStudent(@PathVariable Integer id, Model model){
-        model.addAttribute("students", studentService.getStudent(id));
-        return "student/students";
+    public String showStudent(@PathVariable Integer id, Model model) {
+        try {
+            model.addAttribute("student", studentService.getStudent(id));
+            return "student/student";
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found", e);
+        }
     }
 
     @GetMapping("/profile/{id}")
