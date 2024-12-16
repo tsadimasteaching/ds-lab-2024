@@ -6,6 +6,7 @@ import gr.hua.dit.ds.ds_lab_2024.payload.response.JwtResponse;
 import gr.hua.dit.ds.ds_lab_2024.repositories.RoleRepository;
 import gr.hua.dit.ds.ds_lab_2024.repositories.UserRepository;
 import gr.hua.dit.ds.ds_lab_2024.service.UserDetailsImpl;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,6 +43,15 @@ public class AuthController {
         this.roleRepository = roleRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
+    }
+
+    @PostConstruct
+    public void setup() {
+        Role role_user = new Role("ROLE_USER");
+        Role role_admin = new Role("ROLE_ADMIN");
+
+        roleRepository.updateOrInsert(role_user);
+        roleRepository.updateOrInsert(role_admin);
     }
 
     @PostMapping("/signin")
