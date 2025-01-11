@@ -4,11 +4,13 @@ import gr.hua.dit.ds.ds_lab_2024.entities.Course;
 import gr.hua.dit.ds.ds_lab_2024.entities.Student;
 import gr.hua.dit.ds.ds_lab_2024.entities.Teacher;
 import gr.hua.dit.ds.ds_lab_2024.repositories.CourseRepository;
+import gr.hua.dit.ds.ds_lab_2024.repositories.StudentRepository;
 import gr.hua.dit.ds.ds_lab_2024.repositories.TeacherRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +20,14 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     private TeacherRepository teacherRepository;
+    private final StudentRepository studentRepository;
 
-    public CourseService(CourseRepository courseRepository, TeacherRepository teacherRepository) {
+    public CourseService(CourseRepository courseRepository,
+                         TeacherRepository teacherRepository,
+                         StudentRepository studentRepository) {
         this.courseRepository = courseRepository;
         this.teacherRepository = teacherRepository;
+        this.studentRepository = studentRepository;
     }
 
     @Transactional
@@ -37,6 +43,12 @@ public class CourseService {
     @Transactional
     public Optional<Course> getCourse(Integer courseId) {
         return courseRepository.findById(courseId);
+    }
+
+    @Transactional
+    public List<Student> getCourseStudents(final Integer courseId) {
+        final Course course = this.courseRepository.findById(courseId).orElseThrow();
+        return Collections.emptyList(); // TODO Implement.
     }
 
     @Transactional

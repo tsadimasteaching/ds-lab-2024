@@ -1,11 +1,13 @@
 package gr.hua.dit.ds.ds_lab_2024.controllers;
 
 import gr.hua.dit.ds.ds_lab_2024.entities.Course;
+import gr.hua.dit.ds.ds_lab_2024.entities.Student;
 import gr.hua.dit.ds.ds_lab_2024.service.CourseService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.boot.autoconfigure.batch.BatchTransactionManager;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,7 +31,7 @@ public class CourseRestController {
     }
 
     @PostMapping("")
-    public Course createCourse(@RequestBody  Course course) {
+    public Course createCourse(@RequestBody Course course) {
         return courseService.saveCourse(course);
     }
 
@@ -37,7 +39,6 @@ public class CourseRestController {
     public ResponseEntity<Course> getCourse(@PathVariable Integer courseId) {
         Optional<Course> course = courseService.getCourse(courseId);
         return course.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-
     }
 
     @DeleteMapping("/{courseId}")
@@ -49,5 +50,11 @@ public class CourseRestController {
             else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
         }
+    }
+
+    @GetMapping("/{courseId}/students")
+    public List<Student> getCourseStudents(@PathVariable Integer courseId) {
+        List<Student> students = courseService.getCourseStudents(courseId);
+        return students;
     }
 }
