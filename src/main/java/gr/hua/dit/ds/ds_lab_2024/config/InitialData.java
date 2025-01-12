@@ -40,10 +40,17 @@ public class InitialData {
     @Transactional
     @PostConstruct
     public void populateDBWithInitialData() {
-        Role roleAdmin = new Role("admin");
-        Role roleUser = new Role("user");
+        this.roleRepository.deleteAll();
+        this.userRepository.deleteAll();
+        this.teacherRepository.deleteAll();
+        this.courseRepository.deleteAll();
+
+        Role roleAdmin = new Role("ROLE_ADMIN");
+        Role roleManager = new Role("ROLE_MANAGER");
+        Role roleUser = new Role("ROLE_USER");
 
         roleAdmin = this.roleRepository.updateOrInsert(roleAdmin);
+        roleManager = this.roleRepository.updateOrInsert(roleManager);
         roleUser = this.roleRepository.updateOrInsert(roleUser);
 
         var existing = this.userRepository.findByUsername("admin").orElse(null);
@@ -53,8 +60,19 @@ public class InitialData {
             userAdmin.setUsername("admin");
             userAdmin.setPassword(this.passwordEncoder.encode("admin"));
             userAdmin.setEmail("admin@hua.gr");
-            userAdmin.setRoles(Set.of(roleAdmin, roleUser));
+            userAdmin.setRoles(Set.of(roleAdmin, roleManager, roleUser));
             this.userRepository.save(userAdmin);
+        }
+
+        existing = this.userRepository.findByUsername("manager").orElse(null);
+        if (existing == null) {
+            LOGGER.info("Creating User 'manager'");
+            User userUser = new User();
+            userUser.setUsername("manager");
+            userUser.setPassword(this.passwordEncoder.encode("manager"));
+            userUser.setEmail("manager@hua.gr");
+            userUser.setRoles(Set.of(roleManager, roleUser));
+            this.userRepository.save(userUser);
         }
 
         existing = this.userRepository.findByUsername("user").orElse(null);
@@ -64,7 +82,7 @@ public class InitialData {
             userUser.setUsername("user");
             userUser.setPassword(this.passwordEncoder.encode("user"));
             userUser.setEmail("user@hua.gr");
-            userUser.setRoles(Set.of(roleAdmin, roleUser));
+            userUser.setRoles(Set.of(roleUser));
             this.userRepository.save(userUser);
         }
 
