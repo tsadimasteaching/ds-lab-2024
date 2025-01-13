@@ -31,5 +31,7 @@ make sure you have set correctly ``JAVA_HOME`` and ``M2_HOME`` enviromental vari
 mvn spring-boot:run
 ```
 
+## Swagger
+* visit [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) to see the api documentation
 ## FrontEnd
 This project can use repository [https://github.com/gkoulis/ds-lab-2023-frontend](https://github.com/gkoulis/ds-lab-2023-frontend) as frontend
