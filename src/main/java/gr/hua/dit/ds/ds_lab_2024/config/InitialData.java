@@ -40,10 +40,10 @@ public class InitialData {
     @Transactional
     @PostConstruct
     public void populateDBWithInitialData() {
-        this.roleRepository.deleteAll();
-        this.userRepository.deleteAll();
-        this.teacherRepository.deleteAll();
-        this.courseRepository.deleteAll();
+//        this.roleRepository.deleteAll();
+//        this.userRepository.deleteAll();
+//        this.teacherRepository.deleteAll();
+//        this.courseRepository.deleteAll();
 
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleManager = new Role("ROLE_MANAGER");
