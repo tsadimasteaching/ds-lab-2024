@@ -1,14 +1,17 @@
 package gr.hua.dit.ds.ds_lab_2024.controllers;
 
 import gr.hua.dit.ds.ds_lab_2024.entities.Course;
+import gr.hua.dit.ds.ds_lab_2024.entities.Student;
 import gr.hua.dit.ds.ds_lab_2024.service.CourseService;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.boot.autoconfigure.batch.BatchTransactionManager;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +32,7 @@ public class CourseRestController {
     }
 
     @PostMapping("")
-    public Course createCourse(@RequestBody  Course course) {
+    public Course createCourse(@RequestBody Course course) {
         return courseService.saveCourse(course);
     }
 
@@ -37,7 +40,6 @@ public class CourseRestController {
     public ResponseEntity<Course> getCourse(@PathVariable Integer courseId) {
         Optional<Course> course = courseService.getCourse(courseId);
         return course.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-
     }
 
     @DeleteMapping("/{courseId}")
@@ -49,5 +51,11 @@ public class CourseRestController {
             else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
         }
+    }
+
+    @GetMapping("/{courseId}/students")
+    public List<Student> getCourseStudents(@PathVariable Integer courseId) {
+        List<Student> students = courseService.getCourseStudents(courseId);
+        return students;
     }
 }
