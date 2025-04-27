@@ -12,6 +12,7 @@ FROM eclipse-temurin:21-alpine-3.21
 MAINTAINER tsadimas
 WORKDIR /app
 
+RUN apk update && apk add curl
 # Set non-root user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
