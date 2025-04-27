@@ -1,0 +1,46 @@
+# Git
+.git/
+.gitignore
+
+# Ignore Maven output
+target/
+
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build scripts
+build/
+out/
+
+# Docker files
+docker-compose*.yml
+Dockerfile*
+
+# Temp files
+*.tmp
+*.bak
+*.swp
