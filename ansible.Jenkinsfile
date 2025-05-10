@@ -15,7 +15,16 @@ pipeline {
             sh '''
                 ansible -i ~/workspace/ansible/hosts.yaml -m ping appserver-vm,dbserver-vm
             '''
+            }
         }
-    }
+        
+        stage('Install postgres') {
+            steps {
+                sh '''
+                    export ANSIBLE_CONFIG=~/workspace/ansible/ansible.cfg
+                    ansible-playbook -i ~/workspace/ansible/hosts.yaml -l azure-db-server ~/workspace/ansible/playbooks/postgres-16.yaml
+                '''
+            }
+        }
 }
 }
