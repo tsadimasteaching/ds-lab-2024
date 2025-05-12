@@ -2,6 +2,11 @@ pipeline {
 
     agent any
 
+    parameters {
+        booleanParam(name: 'INSTALL_POSTGRES', defaultValue: true, description: 'Install PostgreSQL')
+        booleanParam(name: 'INSTALL_SPRING', defaultValue: true, description: 'Install Spring Boot app')
+    }
+
     stages {
     
         stage('run ansible pipeline') {
@@ -19,6 +24,9 @@ pipeline {
         }
         
         stage('Install postgres') {
+             when {
+                expression { return params.INSTALL_POSTGRES }
+            }
             steps {
                 sh '''
                     export ANSIBLE_CONFIG=~/workspace/ansible/ansible.cfg
@@ -28,6 +36,9 @@ pipeline {
         }
 
         stage('install springboot') {
+             when {
+                expression { return params.INSTALL_SPRING }
+            }
             steps {
                 sh '''
                     export ANSIBLE_CONFIG=~/workspace/ansible/ansible.cfg
