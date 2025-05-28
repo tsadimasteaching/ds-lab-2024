@@ -1,0 +1,76 @@
+services:
+  db:
+    image: postgres:16
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD=pass123
+      - POSTGRES_DB=students
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    volumes:
+      - 'dslabdb:/var/lib/postgresql/data/'
+
+  spring:
+    build:
+      context: .
+      dockerfile: nonroot-multistage-otel.Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/students
+      - SPRING_DATASOURCE_USERNAME=dbuser
+      - SPRING_DATASOURCE_PASSWORD=pass123
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=springboot-app
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  frontend:
+    #image: front
+    build:
+      context: https://github.com/gkoulis/ds-lab-2023-frontend.git#main
+      #context: git@github.com:gkoulis/ds-lab-2023-frontend.git#env
+      #dockerfile: node.Dockerfile
+    #    environment:
+    #      - VITE_BACKEND=http://spring:9090
+    ports:
+      - 9000:80
+    depends_on:
+      spring:
+        condition: service_healthy
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.101.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317"
+    depends_on:
+      - zipkin
+
+volumes:
+  dslabdb:
