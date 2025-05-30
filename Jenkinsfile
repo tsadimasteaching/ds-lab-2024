@@ -43,7 +43,7 @@ stages {
             }
         }
 
-    
+
 
     stage('deploy to kubernetes') {
             steps {
@@ -60,7 +60,6 @@ stages {
 //        }
 //    }
 
-
-
+}
 
 }
