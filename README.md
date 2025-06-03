@@ -76,3 +76,7 @@ spec:
     path: /actuator/prometheus
     interval: 15s
 ```
+
+add custom dashboard
+
+https://grafana.com/grafana/dashboards/19004-spring-boot-statistics/
