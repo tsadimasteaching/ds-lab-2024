@@ -36,4 +36,43 @@ mvn spring-boot:run
 ## FrontEnd
 This project can use repository [https://github.com/gkoulis/ds-lab-2023-frontend](https://github.com/gkoulis/ds-lab-2023-frontend) as frontend
 
-# test poll
+# Metrics
+
+* add 
+```xml
+<dependency>
+    <groupId>io.micrometer</groupId>
+		<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+```
+
+metrics are available in http://localhost:8080/actuator/metrics
+
+* kubernetes
+
+add these annotations to deployment
+```yaml
+  annotations:
+    prometheus.io/path: /actuator/prometheus
+    prometheus.io/port: "8080"
+    prometheus.io/scrape: "true"
+```
+
+if required, add this servicemonitor
+
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: spring-boot-monitor
+  labels:
+    release: kube-prom-stack
+spec:
+  selector:
+    matchLabels:
+      app: spring
+  endpoints:
+  - port: spring
+    path: /actuator/prometheus
+    interval: 15s
+```
